@@ -1,25 +1,18 @@
 #include <ros/ros.h>
 #include <ros/console.h>
 #include <cv_bridge/cv_bridge.h>
+
 #include <nav_msgs/Odometry.h>
 #include <sensor_msgs/Image.h>
 #include <sensor_msgs/image_encodings.h>
+
 #include <opencv2/imgproc.hpp>
 #include <opencv2/ximgproc.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/highgui/highgui.hpp>
-#include <pcl/point_types.h>
-#include <pcl_ros/point_cloud.h>
-
-using namespace pcl;
 
 ros::Publisher pointcloud_pub;
-
 nav_msgs::Odometry odom;
-cv_bridge::CvImagePtr left_ptr;
-cv_bridge::CvImagePtr right_ptr;
-
-PointCloud<PointXYZ>::Ptr output_cloud(new PointCloud<PointXYZ>());
 
 void odomCallback(const nav_msgs::Odometry::ConstPtr &odom_msg) {
   odom.header = odom_msg->header;
@@ -29,6 +22,7 @@ void odomCallback(const nav_msgs::Odometry::ConstPtr &odom_msg) {
 }
 
 void leftCallback(const sensor_msgs::Image::ConstPtr &left_msg) {
+  cv_bridge::CvImagePtr left_ptr;
   try {
     left_ptr = cv_bridge::toCvCopy(left_msg, sensor_msgs::image_encodings::BGR8);
   } catch (cv_bridge::Exception& e) {
@@ -67,8 +61,8 @@ int main(int argc, char** argv) {
   ros::Subscriber left_sub = nh.subscribe("/mipi/cam0", 1, leftCallback);
   //ros::Subscriber right_sub = nh.subscribe("/mipi/cam1", 1, rightCallback);
 
-  output_cloud->header.frame_id = "base_link";
-  pointcloud_pub = nh.advertise<PointCloud<PointXYZ>>("points", 1);
+  //output_cloud->header.frame_id = "base_link";
+  //pointcloud_pub = nh.advertise<PointCloud<PointXYZ>>("points", 1);
 
   ros::spin();
   return 0;
