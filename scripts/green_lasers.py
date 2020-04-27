@@ -11,8 +11,8 @@ FOCAL_L  = 0.005
 BASELINE = 3 * 0.0254
 ANGLE    = 55
 
-img_l = cv2.imread('left_rect.jpg')
-img_r = cv2.imread('right_rect.jpg')
+img_l = cv2.imread('images/left_rect.jpg')
+img_r = cv2.imread('images/right_rect.jpg')
 
 hsv_l    = cv2.cvtColor(img_l, cv2.COLOR_BGR2HSV)
 thresh_l = cv2.inRange(hsv_l, (70, 30, 180), (100, 255, 255));
