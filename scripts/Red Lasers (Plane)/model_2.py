@@ -32,7 +32,7 @@ plane = (0.04493705, -0.93709475, 0.3461706, -0.16562456)
 SENSOR_H = 0.00356
 SENSOR_W = 0.00626
 FOCAL_L  = 0.005
-ANGLE    = 21.875
+ANGLE    = -21.125
 
 bridge = CvBridge()
 points = []
@@ -82,7 +82,7 @@ def imageCallback():
           pz = (p[1] * math.sin(ANGLE * math.pi / 180)) \
              + (p[2] * math.cos(ANGLE * math.pi / 180))
    
-          po = [p[0], py + index * 0.03, 0.5 - pz]
+          po = [p[0], py + index * 0.02, 0.5 - pz]
 
           if po[0] <= 1 and po[0] >= -1:
             if po[2] <= 0.2 and po[2] >= -0.05:
